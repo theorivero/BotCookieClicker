@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Bot:
@@ -44,6 +45,19 @@ class Bot:
 
     def get(self, url):
         self.driver.get(url)
+
+    def move_to_element_and_click(self, xpath):
+        # TODO: Improves method
+        element = self.driver.find_element(By.XPATH, xpath)
+        action = ActionChains(self.driver)
+        try:
+            action.move_to_element(element).perform()
+            element = self.driver.find_element(By.XPATH, xpath)
+            element.click()
+            return True
+        except Exception as e:
+            # TODO: treat exceptions
+            return False
 
     @staticmethod
     def parse_cookies(selenium_cookies):
