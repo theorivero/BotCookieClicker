@@ -5,6 +5,7 @@ from Bot import Bot
 
 class InterfaceCookieClicker(Bot):
     def __init__(self, fullscreen):
+        # TODO: creates instability counter to restart driver
         self.at_main_game = True
         self.clicking = False
         self.last_save = time.time()
@@ -30,7 +31,7 @@ class InterfaceCookieClicker(Bot):
                     with self.lock:
                         cookie.click()
             except Exception as e:
-                print(f'erro {e} no click on cookie')
+                print(f'erro no click on cookie')
 
     def make_upgrades(self):
         while True:
@@ -40,7 +41,7 @@ class InterfaceCookieClicker(Bot):
                     try:
                         enabled_update.click()
                     except Exception as e:
-                        print(f'erro {e} no make upgrades')
+                        print(f'erro no make upgrades')
 
     def buy_helpers(self):
         while True:
@@ -48,9 +49,9 @@ class InterfaceCookieClicker(Bot):
             if enabled_helper:
                 with self.lock:
                     try:
-                        enabled_helper.click()
+                        self.move_to_element_and_click('//div[@class="product unlocked enabled"]')
                     except Exception as e:
-                        print(f'erro {e} no buy helpers')
+                        print(f'erro no buy helpers')
 
     def load_game(self):
         time.sleep(1)
@@ -78,7 +79,4 @@ class InterfaceCookieClicker(Bot):
                         self.click_on_element('//*[@id="menu"]/div[1]')
                         self.last_save = time.time()
             except Exception as e:
-                print(f'erro {e} no save game')
-
-
-
+                print(f'erro no save game tentando de novo')
